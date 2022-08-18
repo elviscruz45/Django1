@@ -1,9 +1,8 @@
-import datetime
-
-from django.db import models
-from django.utils import timezone
 
 
-print(timezone.timezone.now())
+a=(1)
 
-#print(timezone.now() - datetime.timedelta(days=1))
+b=(2,)
+
+print(type(a))
+print(type(b))

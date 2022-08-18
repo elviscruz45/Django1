@@ -13,7 +13,5 @@ urlpatterns=[
     path("<int:question_idd>/results/", views.results,name="results"),
     # ex:/polls/5/vote
     path("<int:question_idd>/vote", views.vote,name="vote"),
-    
-    
 ]
 

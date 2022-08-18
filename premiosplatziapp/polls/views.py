@@ -17,9 +17,22 @@ def detail(request, question_idd):
     })
 
 def results(request, question_idd):
-    return HttpResponse(f"Estas viendo resultados de la pregunta numero {question_idd}")
+    question=get_object_or_404(Question,pk=question_idd)
+    return render(request,"polls/results.html",{
+        "question":question
+    })
 
 
 def vote(request, question_idd):
-    return HttpResponse(f"Estas votando a la pregunta numero {question_idd}")
-
+    question=get_object_or_404(Question,pk=question_idd)
+    try:
+        selected_choice=question.choice_set.get(pk=request.POST["choice"])
+    except (KeyError,Choice.DoesNotExist):
+        return render(request,"polls/detail.html",{
+            "question":question,
+            "error_message":"No elegiste una respuesta"
+        })
+    else:
+        selected_choice.votes +=1
+        selected_choice.save()
+        return HttpResponseRedirect(reverse("pollss:results", args=(question.id,)))
